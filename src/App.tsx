@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import Lenis from "lenis"
+import FaqSection, { type FaqData } from "./components/ui/habit-faq-scroller"
 import mistakeScreen from "./Images/a-mistake.png"
 import stepScreen from "./Images/a-step.png"
 import timerScreen from "./Images/a-timer.png"
@@ -1419,77 +1420,95 @@ function RecipeDiscovery() {
   )
 }
 
-const faqItems = [
-  [
-    "Is Ruchi free to use?",
-    "Ruchi will include a free way to explore the core experience. Final limits and paid plan details will be published before launch.",
+const faqData: FaqData = {
+  mainTitle: "Got questions? Let's clear them up.",
+  mainSubtitle:
+    "Everything we can confirm today, without the fine-print fog. Still unsure? Write to us at hello@ruchi.app.",
+  rows: [
+    {
+      id: "row1",
+      speed: "60s",
+      direction: "left",
+      items: [
+        {
+          id: "q1",
+          question: "Is Ruchi free to use?",
+          answer:
+            "Ruchi will include a free way to explore the core experience. Final limits and paid plan details will be published before launch.",
+        },
+        {
+          id: "q2",
+          question: "Does Ruchi support Telugu?",
+          answer:
+            "Yes. Ruchi is designed for natural cooking guidance in Telugu and English.",
+        },
+      ],
+    },
+    {
+      id: "row2",
+      speed: "45s",
+      direction: "right",
+      items: [
+        {
+          id: "q3",
+          question: "Do I need to know how to cook?",
+          answer:
+            "Not at all. Ruchi breaks recipes into clear steps and lets you ask for clarification whenever you need it.",
+        },
+        {
+          id: "q4",
+          question: "Can I use Ruchi while my hands are busy?",
+          answer:
+            "Voice-guided cooking is central to Ruchi, so you can move through steps and manage timers with less screen touching.",
+        },
+      ],
+    },
+    {
+      id: "row3",
+      speed: "70s",
+      direction: "left",
+      items: [
+        {
+          id: "q5",
+          question: "What happens if I make a cooking mistake?",
+          answer:
+            "Ruchi can suggest practical ways to recover from common issues such as a dish being too salty, spicy, watery, bland, or slightly burnt.",
+        },
+        {
+          id: "q6",
+          question: "Is Ruchi available for Android and iOS?",
+          answer:
+            "Platform availability is still being confirmed. Join early access for verified launch updates.",
+        },
+      ],
+    },
+    {
+      id: "row4",
+      speed: "50s",
+      direction: "right",
+      items: [
+        {
+          id: "q7",
+          question: "What is included in the paid plans?",
+          answer:
+            "Paid plan entitlements are still being finalised. The pricing section is intentionally labelled as a preview.",
+        },
+        {
+          id: "q8",
+          question: "Can I cancel my subscription?",
+          answer:
+            "Cancellation terms will be published with the final subscription policy before paid plans launch.",
+        },
+      ],
+    },
   ],
-  [
-    "Does Ruchi support Telugu?",
-    "Yes. Ruchi is designed for natural cooking guidance in Telugu and English.",
-  ],
-  [
-    "Do I need to know how to cook?",
-    "Not at all. Ruchi breaks recipes into clear steps and lets you ask for clarification whenever you need it.",
-  ],
-  [
-    "Can I use Ruchi while my hands are busy?",
-    "Voice-guided cooking is central to Ruchi, so you can move through steps and manage timers with less screen touching.",
-  ],
-  [
-    "What happens if I make a cooking mistake?",
-    "Ruchi can suggest practical ways to recover from common issues such as a dish being too salty, spicy, watery, bland, or slightly burnt.",
-  ],
-  [
-    "Is Ruchi available for Android and iOS?",
-    "Platform availability is still being confirmed. Join early access for verified launch updates.",
-  ],
-  [
-    "What is included in the paid plans?",
-    "Paid plan entitlements are still being finalised. The pricing section is intentionally labelled as a preview.",
-  ],
-  [
-    "Can I cancel my subscription?",
-    "Cancellation terms will be published with the final subscription policy before paid plans launch.",
-  ],
-]
+}
 
 function Faq() {
-  const [open, setOpen] = useState(0)
   return (
     <section className="section faq" id="faq">
-      <div className="container faq-grid">
-        <SectionHeading
-          eyebrow="COMMON QUESTIONS"
-          title="Got questions? Let's clear them up."
-          copy="Everything we can confirm today, without the fine-print fog."
-          align="left"
-        />
-        <div className="faq-list">
-          {faqItems.map(([question, answer], index) => (
-            <article
-              className={`faq-item ${open === index ? "open" : ""}`}
-              key={question}
-            >
-              <button
-                type="button"
-                aria-expanded={open === index}
-                aria-controls={`faq-answer-${index}`}
-                onClick={() => setOpen(open === index ? -1 : index)}
-              >
-                <span>{question}</span>
-                <Icon name="chevron" />
-              </button>
-              <div
-                className="faq-answer"
-                id={`faq-answer-${index}`}
-                aria-hidden={open !== index}
-              >
-                <p>{answer}</p>
-              </div>
-            </article>
-          ))}
-        </div>
+      <div className="container">
+        <FaqSection data={faqData} />
       </div>
     </section>
   )
