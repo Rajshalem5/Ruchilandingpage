@@ -844,11 +844,11 @@ function DemoSection() {
 
 function App() {
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
     const lenis = new Lenis({
-      autoRaf: true,
-      anchors: { offset: -96 },
-    })
+          autoRaf: true,
+          anchors: { offset: -96 },
+          respectReducedMotion: false,
+        })
     return () => lenis.destroy()
   }, [])
 
