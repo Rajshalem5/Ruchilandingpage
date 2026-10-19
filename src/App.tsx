@@ -253,6 +253,13 @@ function Navbar() {
   }, [])
 
   useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : ""
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [open])
+
+  useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false)
@@ -565,7 +572,7 @@ function DemoSection() {
   const tabsRef = useRef<HTMLDivElement>(null)
   const [pill, setPill] = useState({ x: 0, w: 0, s: 1 })
 
-  useEffect(() => {
+  const measurePill = () => {
     const tabs = tabsRef.current
     const btn = tabs?.querySelector<HTMLButtonElement>(
       '[role="tab"][aria-selected="true"]',
@@ -577,7 +584,16 @@ function DemoSection() {
       w: base.offsetWidth,
       s: btn.offsetWidth / base.offsetWidth,
     })
+  }
+
+  useEffect(() => {
+    measurePill()
   }, [active])
+
+  useEffect(() => {
+    window.addEventListener("resize", measurePill)
+    return () => window.removeEventListener("resize", measurePill)
+  }, [])
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key)) return
