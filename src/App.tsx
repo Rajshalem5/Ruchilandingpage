@@ -31,16 +31,6 @@ import whyRuchiImage from "@/imports/why-ruchi-exists.jpg"
 
 const images = {
   hero: "https://images.unsplash.com/photo-1743517894265-c86ab035adef?auto=format&fit=crop&w=1200&q=85",
-  dosa: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=900&q=82",
-  idli: "https://images.unsplash.com/photo-1787024231387-edccb8c44700?auto=format&fit=crop&w=900&q=82",
-  thali:
-    "https://images.unsplash.com/photo-1625398407796-82650a8c135f?auto=format&fit=crop&w=1000&q=84",
-  feast:
-    "https://images.unsplash.com/photo-1789993494855-1f89bb27fecb?auto=format&fit=crop&w=1000&q=84",
-  family:
-    "https://images.unsplash.com/photo-1683555500010-e2315045eef9?auto=format&fit=crop&w=1600&q=86",
-  lifestyle:
-    "https://images.unsplash.com/photo-1683555691492-5eed27dc7f61?auto=format&fit=crop&w=1000&q=82",
 }
 
 const navItems = [
@@ -97,16 +87,9 @@ function Icon({ name, size = 20 }: { name: string; size?: number }) {
         <path d="M5 19c2-5 6-8 11-11" />
       </>
     ),
-    book: (
-      <>
-        <path d="M4 5c4-1 6 0 8 2v13c-2-2-4-3-8-2V5Z" />
-        <path d="M20 5c-4-1-6 0-8 2v13c2-2 4-3 8-2V5Z" />
-      </>
-    ),
     heart: (
       <path d="M20 8c0 5-8 11-8 11S4 13 4 8a4 4 0 0 1 7-2 4 4 0 0 1 9 2Z" />
     ),
-    chevron: <path d="m6 9 6 6 6-6" />,
     pause: (
       <>
         <path d="M9 8v8M15 8v8" />
@@ -118,14 +101,7 @@ function Icon({ name, size = 20 }: { name: string; size?: number }) {
         <path d="M4 14h3v6H5a1 1 0 0 1-1-1v-5Zm16 0h-3v6h2a1 1 0 0 0 1-1v-5Z" />
       </>
     ),
-    users: (
-      <>
-        <circle cx="9" cy="8" r="3" />
-        <path d="M3 20c0-4 2-6 6-6s6 2 6 6" />
-        <path d="M16 5a3 3 0 0 1 0 6m1 4c3 0 4 2 4 5" />
-      </>
-    ),
-  }
+    }
   return (
     <svg
       aria-hidden="true"
@@ -166,14 +142,8 @@ function Button({
   )
 }
 
-function AppLogo({ compact = false }: { compact?: boolean }) {
-  return (
-    <img
-      className={compact ? "app-logo compact" : "app-logo"}
-      src={appLogo}
-      alt="Ruchi"
-    />
-  )
+function AppLogo() {
+  return <img className="app-logo" src={appLogo} alt="Ruchi" />
 }
 
 function Kolam({ className = "" }: { className?: string }) {
@@ -247,87 +217,6 @@ function HeroTimer() {
     <strong>
       {String(minutes).padStart(2, "0")}:{seconds}
     </strong>
-  )
-}
-
-function PhoneMockup({
-  variant = "cook",
-  compact = false,
-}: {
-  variant?: "cook" | "discover" | "voice"
-  compact?: boolean
-}) {
-  return (
-    <div className={`phone ${compact ? "phone-compact" : ""}`}>
-      <div className="phone-top">
-        <span>9:41</span>
-        <span className="phone-island" />
-        <span>● ●</span>
-      </div>
-      <div className="phone-screen">
-        <div className="app-bar">
-          <AppLogo compact />
-          <button aria-label="Saved recipes">
-            <Icon name="heart" size={17} />
-          </button>
-        </div>
-        {variant === "discover" ? (
-          <>
-            <p className="phone-kicker">GOOD EVENING</p>
-            <h3>What shall we cook?</h3>
-            <div className="search-pill">Search dishes or ingredients</div>
-            <img src={images.dosa} alt="Dosa with chutneys" />
-            <div className="phone-row">
-              <strong>Pesarattu</strong>
-              <span>30 min</span>
-            </div>
-            <p className="phone-muted">Andhra • Breakfast</p>
-          </>
-        ) : (
-          <>
-            <div className="recipe-mini">
-              <img
-                src={variant === "voice" ? images.thali : images.hero}
-                alt=""
-              />
-              <div>
-                <p>COOKING NOW</p>
-                <strong>
-                  {variant === "voice" ? "Tomato pappu" : "Masala dosa"}
-                </strong>
-              </div>
-            </div>
-            <div className="progress">
-              <i />
-            </div>
-            <p className="phone-kicker">STEP 3 OF 7</p>
-            <h3>
-              {variant === "voice"
-                ? "Add the cooked dal and simmer."
-                : "Spread the batter in a thin circle."}
-            </h3>
-            <p className="phone-muted">
-              Keep the flame at medium and drizzle a little oil around the
-              edges.
-            </p>
-            <div className="timer">
-              <Icon name="clock" />
-              <div>
-                <span>SMART TIMER</span>
-                <strong>{variant === "voice" ? "04:12" : "01:45"}</strong>
-              </div>
-              <button aria-label="Pause timer">
-                <Icon name="pause" size={17} />
-              </button>
-            </div>
-            <div className="voice-orb">
-              <Waveform />
-              <span>Ruchi is listening</span>
-            </div>
-          </>
-        )}
-      </div>
-    </div>
   )
 }
 
@@ -436,54 +325,6 @@ const problems = [
     "Timers, pans, and steps are easy to lose track of.",
   ],
 ]
-
-const features = [
-  [
-    "mic",
-    "Cook with your voice",
-    "Move through every step without repeatedly touching your phone.",
-    "voice",
-  ],
-  [
-    "leaf",
-    "Cook with what you have",
-    "Turn what is already in your kitchen into something delicious.",
-    "ingredients",
-  ],
-  [
-    "clock",
-    "Smart cooking timers",
-    "Keep every tadka, simmer, and resting time on track.",
-    "timer",
-  ],
-  [
-    "spark",
-    "Fix cooking mistakes",
-    "Get calm, practical suggestions when a dish needs rescuing.",
-    "fix",
-  ],
-  [
-    "headphones",
-    "Speak your language",
-    "Switch naturally between Telugu and English as you cook.",
-    "language",
-  ],
-]
-
-function FeatureImageSlot({ title }: { title: string }) {
-  return (
-    <div
-      className="feature-image-slot"
-      role="img"
-      aria-label={`${title} image or video placeholder`}
-    >
-      <span className="placeholder-label">IMAGE OR VIDEO</span>
-      <strong>{title}</strong>
-      <p>Place your feature media here</p>
-      <small>Recommended: 16:9 landscape</small>
-    </div>
-  )
-}
 
 const conversations = [
   {
@@ -1018,42 +859,6 @@ function App() {
         </section>
 
         <DemoSection />
-
-        <section className="section features" id="features" hidden>
-          <div className="container">
-            <SectionHeading
-              eyebrow="COOK WITH CONFIDENCE"
-              title="Everything you need, right when you need it."
-              copy="Thoughtful assistance from the first idea to the final tempering."
-            />
-            <div className="feature-grid">
-              {features.map(([, title, copy], i) => (
-                <article
-                  className={`feature-card stack-card reveal ${
-                    i === features.length - 1 ? "last-card" : ""
-                  }`}
-                  style={
-                    {
-                      "--stack-index": i,
-                      "--stack-offset": `${i * 8}px`,
-                      "--stagger": `${i * 50}ms`,
-                    } as React.CSSProperties
-                  }
-                  key={title}
-                >
-                  <div className="feature-copy">
-                    <span className="feature-number">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3>{title}</h3>
-                    <p>{copy}</p>
-                  </div>
-                  <FeatureImageSlot title={title} />
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
 
         <section className="section how" id="how">
           <Kolam className="how-kolam" />
