@@ -579,6 +579,27 @@ function DemoSection() {
     })
   }, [active])
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key)) return
+    const tabs = tabsRef.current?.querySelectorAll<HTMLButtonElement>(
+      '[role="tab"]',
+    )
+    if (!tabs || tabs.length === 0) return
+    e.preventDefault()
+    const current = Array.from(tabs).findIndex(
+      (tab) => tab.getAttribute("aria-selected") === "true",
+    )
+    const last = tabs.length - 1
+    const select = (i: number) => {
+      tabs[i].focus()
+      setActive(i)
+    }
+    if (e.key === "Home") select(0)
+    else if (e.key === "End") select(last)
+    else if (e.key === "ArrowRight") select(current >= last ? 0 : current + 1)
+    else select(current <= 0 ? last : current - 1)
+  }
+
   return (
     <section className="section meet" id="demo">
       <Kolam className="meet-kolam" />
@@ -587,8 +608,9 @@ function DemoSection() {
           <div className="phone-backdrop" />
           <div
             className="demo-image-frame"
-            role="group"
-            aria-label="Example conversation screens"
+            role="tabpanel"
+            id="demo-panel"
+            aria-labelledby={`demo-tab-${active}`}
           >
             {conversations.map((conversation, index) => (
               <div
@@ -643,6 +665,7 @@ function DemoSection() {
             ref={tabsRef}
             role="tablist"
             aria-label="Example conversations"
+            onKeyDown={onKeyDown}
           >
             <span
               className="demo-tab-pill"
@@ -659,8 +682,11 @@ function DemoSection() {
             {conversations.map((conversation, index) => (
               <button
                 key={conversation.tab}
+                id={`demo-tab-${index}`}
                 role="tab"
                 aria-selected={active === index}
+                aria-controls="demo-panel"
+                tabIndex={active === index ? 0 : -1}
                 onClick={() => setActive(index)}
               >
                 {conversation.tab}
