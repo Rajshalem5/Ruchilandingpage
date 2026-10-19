@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import Lenis from "lenis"
 import FaqSection, { type FaqData } from "./components/ui/habit-faq-scroller"
+import { tickValue } from "./lib/number-ticker"
 import mistakeScreen from "./Images/a-mistake.png"
 import stepScreen from "./Images/a-step.png"
 import timerScreen from "./Images/a-timer.png"
@@ -436,8 +437,7 @@ function NumberTicker({
     const t0 = performance.now()
     const tick = (t: number) => {
       const p = Math.min(1, (t - t0) / dur)
-      const eased = 1 - Math.pow(2, -10 * p)
-      const v = Math.round(from + (value - from) * eased)
+      const v = tickValue(from, value, p)
       el.textContent = `${prefix ?? ""}${v}`
       currentRef.current = v
       if (p < 1) raf = requestAnimationFrame(tick)
