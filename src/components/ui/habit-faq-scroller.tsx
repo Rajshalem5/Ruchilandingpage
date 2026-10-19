@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react"
+import { useRef, type CSSProperties, type ReactNode } from "react"
 
 /**
  * FaqCard
@@ -42,10 +42,26 @@ export function HorizontalScroller({
       ? "animate-scroll-horizontal-reverse"
       : "animate-scroll-horizontal"
   const style = { "--scroll-duration": speed } as CSSProperties
+  const trackRef = useRef<HTMLDivElement>(null)
+
+  // Pause while the user holds the row (touch or mouse). Lifting resumes
+  // it; reduced-motion already kills the animation in CSS.
+  const pause = () => {
+    trackRef.current?.style.setProperty("animation-play-state", "paused")
+  }
+  const resume = () => {
+    trackRef.current?.style.removeProperty("animation-play-state")
+  }
 
   return (
-    <div className="scroller-mask w-full overflow-hidden group relative">
-      <div className={`flex ${animationClass}`} style={style}>
+    <div
+      className="scroller-mask w-full overflow-hidden group relative"
+      onPointerDown={pause}
+      onPointerUp={resume}
+      onPointerLeave={resume}
+      onPointerCancel={resume}
+    >
+      <div ref={trackRef} className={`flex ${animationClass}`} style={style}>
         <div className="flex items-stretch justify-center flex-shrink-0 gap-8 px-4">
           {children}
         </div>

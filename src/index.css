@@ -204,10 +204,11 @@ p { color: var(--muted); }
 .story-copy .kolam { position: absolute; width: 310px; right: -90px; top: -70px; opacity: .12; }
 
 .community { overflow: hidden; }
-.recipe-viewport { --recipe-view: min(1180px, calc(100vw - 48px)); width: 100%; overflow: hidden; cursor: grab; }
+.recipe-viewport { --recipe-view: min(1180px, calc(100vw - 48px)); width: 100%; overflow-x: auto; scrollbar-width: none; cursor: grab; }
+.recipe-viewport::-webkit-scrollbar { display: none; }
 .recipe-viewport:active { cursor: grabbing; }
 .recipe-grid { width: max-content; display: grid; grid-auto-flow: column; grid-auto-columns: calc((var(--recipe-view) - 54px) / 4); gap: 18px; }
-.recipe-viewport.visible .recipe-grid { animation: recipePan 52s linear 1.5s infinite; }
+.recipe-viewport.recipe-auto-pan .recipe-grid { animation: recipePan 52s linear 1.5s infinite; }
 .recipe-viewport:hover .recipe-grid { animation-play-state: paused; }
 .recipe-card { min-width: 0; opacity: 0; transform: translateY(28px) scale(.98); }
 .recipe-viewport.visible .recipe-card { animation: recipeCardIn .7s cubic-bezier(.2,.75,.25,1) calc(min(var(--card-order), 10) * 60ms) forwards; }
@@ -360,8 +361,6 @@ footer .app-logo { filter: brightness(1.15); }
   .animate-scroll-horizontal, .animate-scroll-horizontal-reverse { animation-duration: var(--scroll-duration, 40s) !important; animation-iteration-count: infinite !important; }
   .reveal, .reveal-ready .reveal, .reveal-ready .reveal:not(.visible), .section-reveal, .reveal-ready .section-reveal, .hero-in { opacity: 1; transform: none; filter: none; }
   .how-phone, .how-kolam { transform: none; }
-  .recipe-viewport { overflow-x: auto; scrollbar-width: none; }
-  .recipe-viewport::-webkit-scrollbar { display: none; }
   .recipe-viewport .recipe-grid { animation: none; }
   .recipe-viewport .recipe-card { opacity: 1; transform: none; animation: none; }
 

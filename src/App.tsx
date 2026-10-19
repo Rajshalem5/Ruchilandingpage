@@ -1139,13 +1139,14 @@ function RecipeDiscovery() {
 
   useEffect(() => {
     const el = viewportRef.current
-    if (!el || !canTrackPointer) return
-    if (
+    if (!el) return
+    const reducedMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      return
-    }
+    // Auto-pan only for precise pointers; touch users scroll the strip
+    // themselves, so the motion always has a user-controlled alternative.
+    el.classList.toggle("recipe-auto-pan", canTrackPointer && !reducedMotion)
+    if (!canTrackPointer || reducedMotion) return
     let target = el.scrollLeft
     let raf = 0
     const tick = () => {
